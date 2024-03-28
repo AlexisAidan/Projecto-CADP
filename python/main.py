@@ -45,8 +45,10 @@ while True:
     elif Opcion == 4:
         consultar(Cursor, Cursor_Desempleados)
         continue
-    else:
+    elif Opcion == 0:
         break
+    else:
+        print("Esa opción no es valida")
 
 Conexion.close()
 Conexion_Desempleados.close()
