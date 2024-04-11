@@ -1,14 +1,20 @@
+from tabulate import tabulate
+
 def consultar(cursor, cursor_desempleados):
-    id = input("¿Cual es el ID del empleado que desea consultar?")
-    cursor.execute("Select * FROM EMPLEADO WHERE ID = ?", id)
+    id = input("¿Cuál es el ID del empleado que desea consultar?")
+    cursor.execute("SELECT * FROM EMPLEADO WHERE ID = ?", (id,))
     consulta = cursor.fetchone()
     if consulta:
-        print(f"{consulta[1]} {consulta[2]} {consulta[3]} {consulta[5]}")
+        titulos = {"ID": consulta[0], "Nombre": consulta[1], "Apellido": consulta[2], "Correo": consulta[3], "Antigüedad": consulta[5], "Estatus": "Activo"}
+        datos_persona = [titulos]
+        print(tabulate(datos_persona, headers="keys", tablefmt="fancy_grid"))
     else:
-        cursor_desempleados.execute("Select * FROM EMPLEADO_ELIMINADO WHERE ID = ?", id)
+        cursor_desempleados.execute("SELECT * FROM EMPLEADO_ELIMINADO WHERE ID = ?", (id,))
         consulta = cursor_desempleados.fetchone()
         if consulta:
-            print(f"Empleado encontrado en la tabla desempleado: {consulta[1]} {consulta[2]} {consulta[3]} {consulta[4]}")
+            titulos = {"ID": consulta[0], "Nombre": consulta[1], "Apellido": consulta[2], "Correo": consulta[3], "tiempo trabajado": consulta[4], "estatus": "Inactivo"}
+            datos_persona = [titulos]
+            print(tabulate(datos_persona, headers="keys", tablefmt="fancy_grid"))
         else:
             print("Empleado no encontrado en ninguna tabla.")
 
