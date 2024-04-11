@@ -17,40 +17,42 @@ def modificar_empleado(cursor, conexion):
 
     opcion_modificar_empleado = int(input("Seleccione una opción: "))
     
-    while (0 < opcion_modificar_empleado <= 4):
+    while (1 <= opcion_modificar_empleado <= 4):
         id = int(input("¿Cual es el ID del empleado que desea modificar su informacion? "))
         if opcion_modificar_empleado == 1:
             nombre = input("Ingrese el nuevo nombre del empleado: ")
             
-            datos = [nombre, id]
-            cursor.execute("UPDATE EMPLEADO SET NOMBRE_EMPLEADO = ? WHERE ID = ?", datos)
+            datos = {"ID":id,
+                    "NOMBRE_EMPLEADO": nombre}
+            cursor.execute("UPDATE EMPLEADO SET NOMBRE_EMPLEADO = :NOMBRE_EMPLEADO WHERE ID = :ID", datos)
             conexion.commit()
 
         elif opcion_modificar_empleado == 2:
             apellido = input("Ingrese el nuevo apellido del empleado: ")
 
-            datos = [apellido, id]
-            cursor.execute("UPDATE EMPLEADO SET APELLIDO_EMPLEADO = ? WHERE ID = ?", datos)
+            datos = {"ID":id,
+                    "APELLIDO_EMPLEADO": apellido}
+            cursor.execute("UPDATE EMPLEADO SET APELLIDO_EMPLEADO = :APELLIDO_EMPLEADO WHERE ID = :ID", datos)
             conexion.commit()
 
         elif opcion_modificar_empleado == 3:
             nombre = input("Ingrese el nuevo nombre del empleado: ")
             apellido = input("Ingrese el nuevo apellido del empleado: ")
 
-            datos = [nombre, id]
-
-            cursor.execute("UPDATE EMPLEADO SET NOMBRE_EMPLEADO = ? WHERE ID = ?", datos)
-
-            datos = [apellido, id]
-            cursor.execute("UPDATE EMPLEADO SET APELLIDO_EMPLEADO = ? WHERE ID = ?", datos)
+            datos = {"ID":id,
+                "NOMBRE_EMPLEADO": nombre,
+                "APELLIDO_EMPLEADO": apellido}
+            cursor.execute("UPDATE EMPLEADO SET NOMBRE_EMPLEADO = :NOMBRE_EMPLEADO WHERE ID = :ID", datos)
+            cursor.execute("UPDATE EMPLEADO SET APELLIDO_EMPLEADO = :APELLIDO_EMPLEADO WHERE ID = :ID", datos)
             conexion.commit()
 
         elif opcion_modificar_empleado == 4:
             contraseña = generar_contrasena_aleatoria(12)
 
-            datos = [contraseña, id]
-            print(f"Su nueva contraseña es: {contraseña} ")
-            cursor.execute("UPDATE EMPLEADO SET CONTRASEÑA_CORREO = ? WHERE ID = ?", datos)
+            datos = {"ID": id,
+                     "CONTRASEÑA_CORREO":contraseña}
+            print(f"Su nueva contraseña es: {datos["CONTRASEÑA_CORREO"]} ")
+            cursor.execute("UPDATE EMPLEADO SET CONTRASEÑA_CORREO = :CONTRASEÑA_CORREO WHERE ID = :ID", datos)
             conexion.commit()
         
         else: print("Error")
