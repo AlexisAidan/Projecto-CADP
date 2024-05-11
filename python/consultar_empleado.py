@@ -1,7 +1,7 @@
 from tabulate import tabulate
 
 def consultar(cursor, cursor_desempleados):
-    id = input("¿Cuál es el ID del empleado que desea consultar?")
+    id = input("¿Cuál es el ID del empleado que desea consultar? ")
     cursor.execute("SELECT * FROM EMPLEADO WHERE ID = ?", (id,))
     consulta = cursor.fetchone()
     if consulta:

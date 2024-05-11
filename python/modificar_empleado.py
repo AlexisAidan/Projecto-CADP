@@ -17,6 +17,9 @@ def modificar_empleado(cursor, conexion):
 
     opcion_modificar_empleado = int(input("Seleccione una opción: "))
     
+    if opcion_modificar_empleado < 0 or opcion_modificar_empleado > 4:
+        print("Numero fuera del rango")
+    
     while (1 <= opcion_modificar_empleado <= 4):
         id = int(input("¿Cual es el ID del empleado que desea modificar su informacion? "))
         if opcion_modificar_empleado == 1:
